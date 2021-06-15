@@ -1,0 +1,58 @@
+<nav class="navbar navbar-dark bg-dark">
+
+  <div class="container-fluid">
+
+    {% if user.is_authenticated %}
+      <a class="navbar-brand" href="{% url 'post-list' %}"><i class="fas fa-comment"></i> SecDet Samurai</a>
+    {% else %}
+      <a class="navbar-brand" href="{% url 'index' %}">SecDet Samurai</a>
+    {% endif %}
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    {% if user.is_authenticated %}
+
+        <div class="nav-item inbox-icon-container">
+          <a class="inbox-icon" href="{% url 'inbox' %}"><i class="far fa-paper-plane"></i></a>
+          <a class="navbar-brand" href="{% url 'profile' user.profile.pk %}">Profile</a>
+        </div>
+    {% endif %}
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="navbar-brand" href="{% url 'account_logout' %}">Logout</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Dropdown
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="#">Profile</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+        </li>
+      </ul>
+
+        <form class="d-flex" method="get" action="{% url 'profile-search' %}">
+            <div class="input-group" style="width:250px;">
+                <span class="input-group-text" id="basic-addon1">@</span>
+                <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" name="query" value="{{ request.GET.query }}">
+                <button style="border:none;" type="submit"><i class="fas fa-search"></i></button>
+            </div>
+      </form>
+    </div>
+
+
+  </div>
+
+</nav>

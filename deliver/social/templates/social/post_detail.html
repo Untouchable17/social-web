@@ -1,0 +1,84 @@
+{% extends 'landing/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container">
+
+    <div class="row mt-5">
+        <div class="col-md-5 col-sm-6">
+            <a href="{% url 'post-list' %}" class="btn btn-dark">Back to Feed</a>
+        </div>
+    </div>
+
+    <div class="row justify-content-center mt-3">
+        <div class="col-md-7 col-sm-12 border-bottom">
+            <div class="card mb-3">
+                <div class="test_gg" style="margin: 5px 5px;">
+                    <img class="rounded-circle article-img" src="{{ post.author.profile.picture.url }}" alt="" width="50" height="50">
+                    <strong>{{ post.author }}</strong> | <small>{{ post.created_at|date:"F d, Y" }}</small>
+                </div>
+                {% if post.photo %}
+                    <img class="card-img-top height mt-2" src="{{ post.photo.url }}" style="border-top-left-radius: calc(.0rem - 1px); border-top-right-radius: calc(.0rem - 1px);">
+                {% endif %}
+                <div class="card-body">
+                    <p>{{ post.body }}</p>
+                    <hr style="margin: 0px;">
+                    <img src="http://localhost:8000/static/images/mini-like.png"/>
+                    <img src="http://localhost:8000/static/images/mini-hand.png" alt="">
+                    <img src="http://localhost:8000/static/images/mini-hearth.png" alt="">
+                    <img src="http://localhost:8000/static/images/mini-think.png" alt="">
+                    <img src="http://localhost:8000/static/images/mini-finger.png" alt="">
+                </div>
+                <div class="card-footer" style="display:flex;">
+
+                    <form action="{% url 'like' slug=post.slug %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="{{ request.path }}">
+                        <button type="submit" style="border:none; background:none;">
+                            <i class="fa fa-thumbs-up" aria-hidden="true" style="color: rgb(16, 71, 16);"> <span>{{ post.likes.all.count }}</span></i>
+                        </button>
+                    </form>
+
+                    <form action="{% url 'dislike' slug=post.slug %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="{{ request.path }}">
+                        <button type="submit" style="border:none; background:none;">
+                            <i class="fa fa-thumbs-down" aria-hidden="true" style="color: #8a271e;"> <span>{{ post.dislikes.all.count }}</span></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center mt-3 mb-5">
+        <div class="col-md-5 col-sm-12">
+            <form method="post">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <div class="d-grid gap-2">
+                    <button class="btn btn-success mt-3">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <h3>Comments on Post "{{ post.title }}" </h3>
+    {{ comments.count }}
+
+    {% for comment in comments %}
+        <div class="row justify-content-center mt-3 mb-1 border-bottom" style="background: #F5F5F5;">
+            <div class="test_gg" style="margin: 5px 5px;">
+                <img class="rounded-circle article-img" src="{{ comment.author.profile.picture.url }}" alt="" width="50" height="50">
+                <strong>{{ comment.author }}</strong> | <small>{{ comment.created_at|date:"F d, Y" }}</small>
+
+                {% if request.user == comment.author %}
+                <a href="{% url 'comment-delete' post.pk comment.pk  %}" style="color: #333;"><i class="fas fa-trash"></i></a>
+                {% endif %}
+            </div>
+            <p>{{ comment.comment }}</p>
+        </div>
+    {% endfor %}
+
+</div>
+{% endblock content %}

@@ -1,0 +1,124 @@
+{% extends 'landing/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container">
+
+    <div class="row justify-content-center mt-3">
+        <div class="col-md-5 col-sm-12 border-bottom">
+            <h5>Add a Post!</h5>
+        </div>
+    </div>
+
+    <div class="row justify-content-center mt-3 mb-5">
+        <div class="col-md-5 col-sm-12 border-bottom">
+            <form method="post" action="" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <div class="d-grid gap-2">
+                    <button class="btn btn-success mt-3">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {% for post in post_list.object_list %}
+    <div class="row justify-content-center mt-3">
+        <div class="col-md-6 col-sm-12 border-bottom position-relative">
+            <div class="card mb-3">
+                <div class="post__block" style="margin: 10px 16px;">
+
+                    {% if request.user == post.author %}
+                    <div class="post__block-content" style="position:absolute; right:0; margin-right:10px;">
+                        <a href="{% url 'post-delete' slug=post.slug %}" style="color: #333;"><i class="fas fa-trash"></i></a>
+                        <a href="{% url 'post-edit' slug=post.slug %}" style="color: #333;"><i class="fas fa-edit"></i></a>
+                    </div>
+                    {% else %}
+                    <div class="post__block-content" style="position:absolute; right:0; margin-right:10px;">
+                        <a href="{% url 'post-delete' slug=post.slug %}" style="color: #333;"><i class="fas fa-tags"></i></a>
+                        <a href="{% url 'post-delete' slug=post.slug %}" style="color: #333;"><i class="fas fa-bullhorn"></i></a>
+                    </div>
+                    {% endif %}
+
+                    <div class="author__post-style" style="display: flex;">
+                        <img class="rounded-circle article-img" src="{{ post.author.profile.picture.url }}" alt="" width="50" height="50">
+                        <p style="margin:10px 0px 0px 10px;"><a class="text-primary" style="text-decoration:none;" href="{% url 'profile' post.author.profile.pk %}">@{{ post.author }}</a></p>
+                    </div>
+
+                    <p style="margin-top: 6px;">Created at: {{ post.created_at|date:"F d, Y" }}</p>
+
+                </div>
+
+                <h4 style="text-align: center;">{{ post.title }}</h4>
+                {% if post.photo %}
+                    <img class="card-img-top height" src="{{ post.photo.url }}" style="border-top-left-radius: calc(.0rem - 1px); border-top-right-radius: calc(.0rem - 1px); border">
+                {% endif %}
+
+                <div class="card-body" style="padding: 0px 16px 12px 16px;">
+                    <p class="mt-3">{{ post.body|truncatechars:480 }}</p>
+                    <hr style="margin:0px;">
+                    <img src="http://localhost:8000/static/images/mini-like.png"/>
+                    <img src="http://localhost:8000/static/images/mini-hand.png" alt="">
+                    <img src="http://localhost:8000/static/images/mini-hearth.png" alt="">
+                    <img src="http://localhost:8000/static/images/mini-think.png" alt="">
+                    <img src="http://localhost:8000/static/images/mini-finger.png" alt="">
+                </div>
+
+                <div class="card-footer" style="display:flex;">
+
+                    <form action="{% url 'like' slug=post.slug %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="{{ request.path }}">
+                        <button type="submit" style="border:none; background:none;">
+                            <i class="fa fa-thumbs-up" aria-hidden="true" style="color: rgb(16, 71, 16);"> <span>{{ post.likes.all.count }}</span></i>
+                        </button>
+                    </form>
+
+                    <form action="{% url 'dislike' slug=post.slug %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="{{ request.path }}">
+                        <button type="submit" style="border:none; background:none;">
+                            <i class="fa fa-thumbs-down" aria-hidden="true" style="color: #8a271e;"> <span>{{ post.dislikes.all.count }}</span></i>
+                        </button>
+                    </form>
+
+                    <div class="card__comments" style="margin-left:5px;">
+                        <a href="{{ post.get_absolute_url }}" style="text-decoration:none;"><i class="fa fa-comments" aria-hidden="true" style="color: rgb(69, 80, 112); margin-right:3px;"></i>Comment ({{ post.num_comments }})</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+    {% if is_paginated %}
+    <div class="mt-2">
+        <nav aria-label="...">
+            <ul class="pagination justify-content-center">
+                <li class="page-item {% if not prev_page_url %} disabled {% endif %}">
+                    <a class="page-link" href="{{ prev_page_url }}" tabindex="-1">Previous</a>
+                </li>
+
+                {% for n in post_list.paginator.page_range %}
+                    {% if post_list.number == n %}
+                        <li class="page-item active">
+                            <a class="page-link" href="?page={{ n }}">{{ n }} <span class="sr-only">(current)</span></a>
+                        </li>
+                    {% elif n > post_list.number|add:-3 and n < post_list.number|add:3 %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ n }}">{{ n }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+
+                <li class="page-item {% if not next_page_url %} disabled {% endif %}">
+                    <a class="page-link" href="{{ next_page_url }}" tabindex="-1">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    {% endif %}
+
+</div>
+{% endblock content %}

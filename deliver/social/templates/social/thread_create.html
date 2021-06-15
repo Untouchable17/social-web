@@ -1,0 +1,32 @@
+{% extends 'landing/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 p-5">
+                <a class="btn btn-dark" href="{% url 'inbox' %}">Back to the indobx</a>
+            </div>
+        </div>
+
+         <div class="row">
+            <div class="col-md-12 p-5">
+                <h3>Your messages2</h3>
+            </div>
+        </div>
+
+        <div class="row justify-content-center mb-3 mb-5">
+            <div class="col-md-5 col-sm-12">
+
+                <form method="post" action="">
+                    {% csrf_token %}
+                    <p>Enter your username!</p>
+                    {{ form | crispy }}
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-success" type="submit">Continue</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content%}

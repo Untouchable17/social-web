@@ -1,0 +1,25 @@
+{% extends 'landing/base.html' %}
+
+{% block content %}
+<div class="container">
+
+     <div class="row mt-5">
+        <div class="col-md-5 col-sm-6">
+            <a href="{% url 'post-detail' slug=post.slug %}" class="btn btn-dark">Back to Feed</a>
+        </div>
+     </div>
+
+    <div class="row justify-content-center mt-3 mb-5">
+        <div class="col-md-5 col-sm-12 border-bottom">
+            <form method="post" action="">
+                {% csrf_token %}
+                <h5>Delete Post with name "{{ post.title }}" ?</h5>
+                <div class="d-grid gap-2">
+                    <button class="btn btn-danger mt-3">Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+{% endblock content %}
