@@ -2,7 +2,7 @@
 ____
 ## INSTALLING 
 
-1. Версия Django 3.x и Python +3.7</br>
+1. Версия Django не ниже 3.x и Python +3.7</br>
 2. Клонирование репозитория в ваш проект с помощью:</br>
 - `git clone https://github.com/Untouchable17/social-web.git`
 
