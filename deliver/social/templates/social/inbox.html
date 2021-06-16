@@ -3,28 +3,58 @@
 {% block content %}
 
 <div class="container">
-	<div class="row">
-		<div class="col-md-12 p-5">
-			<h3>Your Conversations</h3>
-		</div>
-	</div>
 
-	<div class="row">
-		<div class="col-md-12 p-5">
+	<div class="test" style="display:flex;">
+		<div class="col-md-3">
+			<h3>Твои сообщения</h3>
+			<div class="">
 			<form method="GET" action="{% url 'thread-create' %}">
-				<button class="btn btn-light p-3" type="submit">Start a Conversation</button>
+				<button class="btn btn-dark p-3" type="submit">Написать сообщение</button>
 			</form>
-		</div>
-	</div>
 
-	{% for thread in threads.all %}
-	<div class="row mb-3">
-		<div class="card col-md-12 p-5 shadow-sm">
-			<h5>{{ thread.user }} - {{ thread.receiver }}</h5>
-			<a class="stretched-link" href="{% url 'thread' thread.pk %}"></a>
+				{% for thread in threads.all %}
+				<div class="row mb-3 mt-4">
+					<div class="card col-md-12 p-3 shadow-sm">
+						<div class="user__inbox-info">
+							<img class="rounded-circle article-img" src="{{ thread.receiver.profile.picture.url }}" alt="" width="50" height="50">
+							<strong>Name: {{ thread.receiver.profile.name }}</strong>
+						</div>
+						<h5 class="mt-2">@{{ thread.receiver }}</h5>
+						<a class="stretched-link" href="{% url 'thread' thread.pk %}"></a>
+					</div>
+				</div>
+				{% endfor %}
+
+			</div>
 		</div>
-	</div>
-	{% endfor %}
+		<div class="col-md-6">
+			<h3>zxvzxxbzxb</h3>
+		</div>
+		</div>
+
+</div>
+<!--	<div class="row">-->
+<!--		<div class="col-md-12 p-5">-->
+<!--			<h3>Your Conversations</h3>-->
+<!--		</div>-->
+<!--	</div>-->
+
+<!--	<div class="row">-->
+<!--		<div class="col-md-12 p-5">-->
+<!--			<form method="GET" action="{% url 'thread-create' %}">-->
+<!--				<button class="btn btn-light p-3" type="submit">Start a Conversation</button>-->
+<!--			</form>-->
+<!--		</div>-->
+<!--	</div>-->
+
+<!--	{% for thread in threads.all %}-->
+<!--	<div class="row mb-3">-->
+<!--		<div class="card col-md-12 p-5 shadow-sm">-->
+<!--			<h5>{{ thread.user }} - {{ thread.receiver }}</h5>-->
+<!--			<a class="stretched-link" href="{% url 'thread' thread.pk %}"></a>-->
+<!--		</div>-->
+<!--	</div>-->
+<!--	{% endfor %}-->
 
 </div>
 {% endblock content %}
