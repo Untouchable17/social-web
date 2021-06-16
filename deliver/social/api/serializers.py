@@ -11,14 +11,14 @@ class CommentSerializer(serializers.ModelSerializer):
 
 class PostSerializer(serializers.ModelSerializer):
 
-    comments = CommentSerializer(many=True)
+    comments = CommentSerializer(many=True, required=False)
 
     author = serializers.ReadOnlyField(source='author.username')
     title = serializers.CharField(required=True)
     slug = serializers.SlugField(required=True)
     body = serializers.CharField(required=True)
-    photo = serializers.ImageField(required=True)
-    created_at = serializers.DateTimeField(required=True)
+    photo = serializers.ImageField(required=False)
+    created_at = serializers.DateTimeField(required=False)
 
     class Meta:
         model = Post
