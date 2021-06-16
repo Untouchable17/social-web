@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'customer',
 
     'rest_framework',
+
 ]
 
 

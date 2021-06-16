@@ -1,2 +1,7 @@
 /.idea
 /venv
+/deliver/deliver/__pycache__
+/deliver/customer/__pycache__
+/deliver/landing/__pycache__
+/deliver/social/__pycache__
+/deliver/social/tests/__pycache__
