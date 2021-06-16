@@ -55,6 +55,8 @@ INSTALLED_APPS = [
     'social',
     'landing',
     'customer',
+
+    'rest_framework',
 ]
 
 SITE_ID = 1
@@ -154,5 +156,14 @@ MEDIA_URL = '/media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    ),
+    'DEFAULT_PARSER_CLASSES': (
+        'rest_framework.parsers.JSONParser',
+    )
+}
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

@@ -2,7 +2,7 @@ from django import forms
 from django.template.defaultfilters import slugify
 from django.core.exceptions import ValidationError
 
-from .models import Post, Comment
+from social.models import Post, Comment
 
 
 class PostForm(forms.ModelForm):
