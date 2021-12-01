@@ -2,12 +2,25 @@
 ____
 ## INSTALLING 
 
-1. Версия Django не ниже 3.x и Python +3.7</br>
-2. Клонирование репозитория в ваш проект с помощью:</br>
-- `git clone https://github.com/Untouchable17/social-web.git`
+#### Инструменты разработки
 
-____
-## List of commands
+<ul>
+    <li>Python +3.7</li>
+    <li>Версия Django не ниже 3.x</li>
+    <li>PostGreSQL</li>
+    <li>NGINX + Gunicorn</li>
+</ul>
 
-Запустите проект с помощью команды в консоле или в терминале
-- `python manage.py runserver`
+
+#### Установка:
+
+<ol>
+    <li>Клонировать репозиторий<pre><code>git clone https://github.com/Untouchable17/social-web.git</code></pre><br></li>
+    <li>Создать виртуальное окружение и активируйте его<pre><code>python -m venv env</code></pre><br></li>
+    <li>Установите все зависимости<pre><code>pip install -r requirements.txt</code></pre><br></li>
+    <li>Подготовьте модели<pre><code>python manage.py makemigrations</code></pre><br>
+    <li>Запустите миграции<pre><code>python manage.py migrate</code></pre><br>
+    <li>Создайте суперпользователя<pre><code>python manage.py createsuperuser</code></pre><br>
+    <li>Запустите сайт<pre><code>python manage.py runserver</code></pre><br></li>
+</ol>
+
