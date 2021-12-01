@@ -7,8 +7,7 @@ ____
 <ul>
     <li>Python +3.7</li>
     <li>Версия Django не ниже 3.x</li>
-    <li>PostGreSQL</li>
-    <li>NGINX + Gunicorn</li>
+    <li>Postgresql</li>
 </ul>
 
 
